@@ -1,5 +1,7 @@
 package com.holoview.holoview.controller;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,10 +29,12 @@ public class AddressController {
     private final AddressService service;
 
     @PostMapping
-    public ResponseEntity<OutAddressDTO> postAddress(@RequestBody InAddressDTO dto) {
+    public ResponseEntity<OutAddressDTO> postAddress(@RequestBody InAddressDTO dto) throws URISyntaxException {
         Address address = service.create(dto);
 
-        return ResponseEntity.ok(new OutAddressDTO(address));
+        URI addressURI = new URI("/addresses/" + address.getId());
+
+        return ResponseEntity.created(addressURI).body(new OutAddressDTO(address));
     }
 
     @GetMapping("{id}")

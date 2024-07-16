@@ -1,5 +1,7 @@
 package com.holoview.holoview.controller;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,6 +20,7 @@ import com.holoview.holoview.controller.dto.shop.OutShopDTO;
 import com.holoview.holoview.model.entity.Shop;
 import com.holoview.holoview.service.impl.ShopService;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -27,10 +30,12 @@ public class ShopController {
     private final ShopService service;
 
     @PostMapping
-    public ResponseEntity<OutShopDTO> postShop(@RequestBody InShopDTO dto) {
+    public ResponseEntity<OutShopDTO> postShop(@RequestBody @Valid InShopDTO dto) throws URISyntaxException {
         Shop newShop = service.create(dto);
 
-        return ResponseEntity.ok(new OutShopDTO(newShop));
+        URI shopURI = new URI("/shops/" + newShop.getId());
+
+        return ResponseEntity.created(shopURI).body(new OutShopDTO(newShop));
     }
 
     @GetMapping("{id}")
@@ -55,7 +60,7 @@ public class ShopController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<OutShopDTO> updateShop(@PathVariable UUID id, @RequestBody InShopDTO dto) {
+    public ResponseEntity<OutShopDTO> updateShop(@PathVariable UUID id, @RequestBody @Valid InShopDTO dto) {
         Shop shopUpdated = service.update(id, dto);
 
         return ResponseEntity.ok(new OutShopDTO(shopUpdated));
