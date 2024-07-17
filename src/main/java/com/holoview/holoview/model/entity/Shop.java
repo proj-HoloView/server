@@ -36,4 +36,7 @@ public class Shop {
 
     @OneToMany(mappedBy = "shop")
     private List<Admin> admins;
+
+    @OneToMany(mappedBy = "shop")
+    private List<ProductCategory> categories;
 }
