@@ -19,6 +19,7 @@ import com.holoview.holoview.controller.dto.productCategory.OutProductCategoryDT
 import com.holoview.holoview.model.entity.ProductCategory;
 import com.holoview.holoview.service.impl.ProductCategoryService;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -28,7 +29,7 @@ public class ProductCategoryController {
     private final ProductCategoryService service;
 
     @PostMapping
-    public ResponseEntity<OutProductCategoryDTO> createCategory(@RequestBody InProductCategoryDTO dto)
+    public ResponseEntity<OutProductCategoryDTO> createCategory(@RequestBody @Valid InProductCategoryDTO dto)
             throws URISyntaxException {
         ProductCategory newCategory = service.create(dto);
 
