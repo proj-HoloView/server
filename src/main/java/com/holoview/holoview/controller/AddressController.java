@@ -20,6 +20,7 @@ import com.holoview.holoview.controller.dto.address.OutAddressDTO;
 import com.holoview.holoview.model.entity.Address;
 import com.holoview.holoview.service.impl.AddressService;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -29,7 +30,7 @@ public class AddressController {
     private final AddressService service;
 
     @PostMapping
-    public ResponseEntity<OutAddressDTO> postAddress(@RequestBody InAddressDTO dto) throws URISyntaxException {
+    public ResponseEntity<OutAddressDTO> postAddress(@RequestBody @Valid InAddressDTO dto) throws URISyntaxException {
         Address address = service.create(dto);
 
         URI addressURI = new URI("/addresses/" + address.getId());
@@ -59,7 +60,7 @@ public class AddressController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<OutAddressDTO> updateAddress(@PathVariable UUID id, @RequestBody InAddressDTO dto) {
+    public ResponseEntity<OutAddressDTO> updateAddress(@PathVariable UUID id, @RequestBody @Valid InAddressDTO dto) {
         Address addressUpdated = service.update(id, dto);
 
         return ResponseEntity.ok(new OutAddressDTO(addressUpdated));

@@ -66,7 +66,7 @@ public class ShopController {
         return ResponseEntity.ok(new OutShopDTO(shopUpdated));
     }
 
-    @DeleteMapping
+    @DeleteMapping("{id}")
     public ResponseEntity<?> deleteShop(@PathVariable UUID id) {
         service.delete(id);
 

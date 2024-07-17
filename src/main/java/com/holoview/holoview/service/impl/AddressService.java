@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.holoview.holoview.controller.dto.address.InAddressDTO;
 import com.holoview.holoview.model.entity.Address;
+import com.holoview.holoview.model.entity.Shop;
 import com.holoview.holoview.model.repository.AddressRepository;
 import com.holoview.holoview.service.IAddressService;
 import com.holoview.holoview.service.exception.NotFoundException;
@@ -18,12 +19,15 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class AddressService implements IAddressService {
     private final AddressRepository repository;
+    private final ShopService shopService;
 
     @Override
     public Address create(InAddressDTO dto) {
+        Shop shopFound = shopService.findById(dto.shopId());
         Address newAddress = new Address();
 
         BeanUtils.copyProperties(dto, newAddress);
+        newAddress.setShop(shopFound);
 
         return repository.save(newAddress);
     }

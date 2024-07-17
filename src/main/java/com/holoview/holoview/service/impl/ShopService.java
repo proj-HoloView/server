@@ -24,6 +24,7 @@ public class ShopService implements IShopService {
         Shop newShop = new Shop();
 
         BeanUtils.copyProperties(dto, newShop);
+        newShop.setActive(true);
 
         return repository.save(newShop);
     }
