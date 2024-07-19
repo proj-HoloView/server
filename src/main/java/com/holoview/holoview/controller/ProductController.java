@@ -59,6 +59,20 @@ public class ProductController {
         return ResponseEntity.ok(dtos);
     }
 
+    @GetMapping("by-shop/{shopId}")
+    public ResponseEntity<List<OutProductDTO>> findAllByShopId(@PathVariable UUID shopId) {
+        List<Product> productsFound = service.findAllByShopId(shopId);
+
+        if (productsFound.isEmpty())
+            return ResponseEntity.noContent().build();
+
+        List<OutProductDTO> dtos = productsFound.stream()
+                .map(OutProductDTO::new)
+                .toList();
+
+        return ResponseEntity.ok(dtos);
+    }
+
     @PutMapping("{id}")
     public ResponseEntity<OutProductDTO> updateProduct(@PathVariable UUID id, @RequestBody @Valid InProductDTO dto) {
         Product productUpdated = service.update(id, dto);
