@@ -12,7 +12,7 @@ import lombok.Data;
 
 @Data
 @Entity
-public class InnactiveSquare {
+public class InactiveSquare {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;

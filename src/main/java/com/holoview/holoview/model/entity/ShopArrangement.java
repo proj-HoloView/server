@@ -28,7 +28,7 @@ public class ShopArrangement {
     private Shop shop;
 
     @OneToMany(mappedBy = "arrangement")
-    private List<InnactiveSquare> innactiveSquares;
+    private List<InactiveSquare> innactiveSquares;
 
     @OneToMany(mappedBy = "arrangement")
     private List<Shelf> shelf;
