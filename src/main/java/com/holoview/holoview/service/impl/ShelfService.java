@@ -38,4 +38,8 @@ public class ShelfService implements IShelfService {
 
         repository.deleteById(id);
     }
+
+    public Shelf findById(UUID id) {
+        return repository.findById(id).orElseThrow(NotFoundException::new);
+    }
 }

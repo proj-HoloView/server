@@ -17,7 +17,7 @@ import lombok.Data;
 public class ProductCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID Id;
+    private UUID id;
 
     @Column
     private String category;
