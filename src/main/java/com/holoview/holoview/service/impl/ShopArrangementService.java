@@ -47,4 +47,8 @@ public class ShopArrangementService implements IShopArrangementService {
 
         repository.deleteById(id);
     }
+
+    public ShopArrangement findById(UUID id) {
+        return repository.findById(id).orElseThrow(NotFoundException::new);
+    }
 }

@@ -30,8 +30,7 @@ public class PromotionController {
     private final PromotionService service;
 
     @PostMapping
-    public ResponseEntity<OutPromotionDTO> createPromotion(@RequestBody @Valid InPromotionDTO dto)
-            throws URISyntaxException {
+    public ResponseEntity<OutPromotionDTO> createPromotion(@RequestBody @Valid InPromotionDTO dto) throws URISyntaxException {
         Promotion newPromotion = service.create(dto);
 
         URI promotionUri = new URI("/promotions/" + newPromotion.getId());
