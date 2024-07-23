@@ -21,6 +21,7 @@ public class AdminService implements IAdminService {
     private final AdminRepository repository;
     private final ShopService shopService;
 
+    // POST
     @Override
     public Admin create(InAdminDTO dto) {
         Shop shopFound = shopService.findById(dto.shopId());
@@ -33,9 +34,17 @@ public class AdminService implements IAdminService {
         return repository.save(newAdmin);
     }
 
+    // GET
     @Override
     public Admin findById(UUID id) {
         Admin adminFound = repository.findById(id).orElseThrow(NotFoundException::new);
+
+        return adminFound;
+    }
+
+    @Override
+    public Admin findByEmail(String email) {
+        Admin adminFound = repository.findByEmail(email).orElseThrow(NotFoundException::new);
 
         return adminFound;
     }
@@ -47,6 +56,7 @@ public class AdminService implements IAdminService {
         return adminsFound;
     }
 
+    // PUT
     @Override
     public Admin update(UUID id, InAdminDTO dto) {
         Admin adminFound = findById(id);
@@ -56,6 +66,7 @@ public class AdminService implements IAdminService {
         return repository.save(adminFound);
     }
 
+    // DELETE
     @Override
     public void delete(UUID id) {
         if (!repository.existsById(id))
