@@ -1,0 +1,12 @@
+{"properties": [
+  {
+    "name": "security.token.secret",
+    "type": "java.lang.String",
+    "description": "Secret para verificação de token de segurança"
+  },
+  {
+    "name": "security.cors.allowed-origin",
+    "type": "java.lang.String",
+    "description": "A description for 'security.cors.allowed-origin'"
+  }
+]}

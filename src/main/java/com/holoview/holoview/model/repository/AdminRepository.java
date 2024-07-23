@@ -9,4 +9,6 @@ import com.holoview.holoview.model.entity.Admin;
 
 public interface AdminRepository extends JpaRepository<Admin, UUID> {
     Optional<Admin> findByEmail(String email);
+
+    Boolean existsByEmail(String email);
 }
