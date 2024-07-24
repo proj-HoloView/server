@@ -21,5 +21,10 @@ public class CustomExceptionHandler {
         return ResponseEntity.badRequest().body(new OutError(e.getMessage()));
     }
 
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<?> internalServerErrorHandler(Exception e) {
+        return ResponseEntity.internalServerError().body(e.getMessage());
+    }
+
     public record OutError(String message) { };
 }

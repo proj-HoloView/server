@@ -12,11 +12,9 @@ import com.holoview.holoview.controller.dto.inactiveSquare.InInactiveSquareListD
 import com.holoview.holoview.model.entity.InactiveSquare;
 import com.holoview.holoview.model.entity.ShopArrangement;
 import com.holoview.holoview.model.repository.InactiveSquareRepository;
-import com.holoview.holoview.service.CustomLabel;
 import com.holoview.holoview.service.IInactiveSquareService;
-import com.holoview.holoview.service.exception.BadRequestException;
-import com.holoview.holoview.service.exception.ConflictException;
 import com.holoview.holoview.service.exception.NotFoundException;
+import com.holoview.holoview.util.Validation;
 
 import lombok.AllArgsConstructor;
 
@@ -25,13 +23,14 @@ import lombok.AllArgsConstructor;
 public class InactiveSquareService implements IInactiveSquareService {
     private final InactiveSquareRepository repository;
     private final ShopArrangementService shopArrangementService;
+    private final Validation validation;
 
     // POST
     @Override
     public InactiveSquare create(InInactiveSquareDTO dto) {
         ShopArrangement shopArrangementFound = shopArrangementService.findById(dto.shopArrangementId());
 
-        this.validateSquareLocalization(shopArrangementFound, dto.x(), dto.y());
+        this.validation.validateSquareLocalization(dto.x(), dto.y(), shopArrangementFound);
 
         InactiveSquare newInactiveSquare = new InactiveSquare();
 
@@ -49,7 +48,7 @@ public class InactiveSquareService implements IInactiveSquareService {
 
         dto.inactiveSquares().stream()
                 .forEach(inactiveSquare -> {
-                    this.validateSquareLocalization(shopArrangementFound, inactiveSquare.x(), inactiveSquare.y());
+                    this.validation.validateSquareLocalization(inactiveSquare.x(), inactiveSquare.y(), shopArrangementFound);
 
                     InactiveSquare newInactiveSquare = new InactiveSquare();
 
@@ -70,16 +69,5 @@ public class InactiveSquareService implements IInactiveSquareService {
             throw new NotFoundException();
 
         repository.deleteById(id);
-    }
-
-    // UTIL
-    void validateSquareLocalization(ShopArrangement sa, Integer x, Integer y) {
-        if (x > sa.getSideSize() - 1 || y > sa.getSideSize() - 1) {
-            throw new BadRequestException(CustomLabel.OUT_RANGED_LOCALIZATION);
-        }
-
-        if (repository.findByXAndYAndArrangementId(x, y, sa.getId()).isPresent()) {
-            throw new ConflictException();
-        }
     }
 }

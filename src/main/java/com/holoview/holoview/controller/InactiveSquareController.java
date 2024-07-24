@@ -29,7 +29,8 @@ public class InactiveSquareController {
 
     // POST
     @PostMapping
-    public ResponseEntity<OutInactiveSquareDTO> createInactiveSquare(@RequestBody @Valid InInactiveSquareDTO dto) throws URISyntaxException {
+    public ResponseEntity<OutInactiveSquareDTO> createInactiveSquare(@RequestBody @Valid InInactiveSquareDTO dto)
+            throws URISyntaxException {
         InactiveSquare newInactiveSquare = service.create(dto);
 
         URI inactiveSquareuri = new URI("inactive-squares" + newInactiveSquare.getId());
@@ -43,7 +44,6 @@ public class InactiveSquareController {
 
         return ResponseEntity.ok().build();
     }
-    
 
     // DELETE
     @DeleteMapping("{id}")
