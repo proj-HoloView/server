@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import lombok.Data;
+import lombok.ToString;
 
 @Data
 @Entity
@@ -26,6 +27,7 @@ public class Admin {
     @Column
     private String password;
 
+    @ToString.Exclude
     @ManyToOne
     private Shop shop;
 }

@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.Data;
+import lombok.ToString;
 
 @Data
 @Entity
@@ -34,9 +35,11 @@ public class Product {
     @Column
     private String picture;
 
+    @ToString.Exclude
     @ManyToOne
     private ProductCategory category;
 
+    @ToString.Exclude
     @ManyToOne
     private Shop shop;
 

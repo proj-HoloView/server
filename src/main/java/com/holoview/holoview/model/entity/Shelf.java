@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.Data;
+import lombok.ToString;
 
 @Data
 @Entity
@@ -25,6 +26,7 @@ public class Shelf {
     @Column
     private Integer y;
 
+    @ToString.Exclude
     @ManyToOne
     private ShopArrangement arrangement;
 

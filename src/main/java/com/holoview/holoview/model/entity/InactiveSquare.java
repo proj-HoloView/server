@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import lombok.Data;
+import lombok.ToString;
 
 @Data
 @Entity
@@ -23,6 +24,7 @@ public class InactiveSquare {
     @Column
     private Integer y;
 
+    @ToString.Exclude
     @ManyToOne
     private ShopArrangement arrangement;
 }

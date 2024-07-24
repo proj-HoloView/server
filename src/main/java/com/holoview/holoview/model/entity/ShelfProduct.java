@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import lombok.Data;
+import lombok.ToString;
 
 @Data
 @Entity
@@ -20,9 +21,11 @@ public class ShelfProduct {
     @Column
     private Integer amount;
 
+    @ToString.Exclude
     @ManyToOne
     private Product product;
 
+    @ToString.Exclude
     @ManyToOne
     private Shelf shelf;
 }

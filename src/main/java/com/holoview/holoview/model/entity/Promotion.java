@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import lombok.Data;
+import lombok.ToString;
 
 @Data
 @Entity
@@ -27,6 +28,7 @@ public class Promotion {
     @Column
     private Double finalPrice;
 
+    @ToString.Exclude
     @ManyToOne
     private Product product;
 }

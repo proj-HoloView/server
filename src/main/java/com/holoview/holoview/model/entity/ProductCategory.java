@@ -25,6 +25,7 @@ public class ProductCategory {
     @ManyToOne
     private Shop shop;
 
+    
     @OneToMany(mappedBy = "category")
     private List<Product> products;
 }
