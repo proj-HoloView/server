@@ -8,5 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.holoview.holoview.model.entity.InactiveSquare;
 
 public interface InactiveSquareRepository extends JpaRepository<InactiveSquare, UUID> {
-    Optional<InactiveSquare> findByXAndY(Integer x, Integer y);
+    Optional<InactiveSquare> findByXAndYAndArrangementId(Integer x, Integer y, UUID arrangementId);
 }

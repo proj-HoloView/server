@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.holoview.holoview.controller.dto.inactiveSquare.InInactiveSquareDTO;
+import com.holoview.holoview.controller.dto.inactiveSquare.InInactiveSquareListDTO;
 import com.holoview.holoview.controller.dto.inactiveSquare.OutInactiveSquareDTO;
 import com.holoview.holoview.model.entity.InactiveSquare;
 import com.holoview.holoview.service.impl.InactiveSquareService;
@@ -26,6 +27,7 @@ import lombok.AllArgsConstructor;
 public class InactiveSquareController {
     private final InactiveSquareService service;
 
+    // POST
     @PostMapping
     public ResponseEntity<OutInactiveSquareDTO> createInactiveSquare(@RequestBody @Valid InInactiveSquareDTO dto) throws URISyntaxException {
         InactiveSquare newInactiveSquare = service.create(dto);
@@ -35,6 +37,15 @@ public class InactiveSquareController {
         return ResponseEntity.created(inactiveSquareuri).body(new OutInactiveSquareDTO(newInactiveSquare));
     }
 
+    @PostMapping("list")
+    public ResponseEntity<?> createInactiveSquareList(@RequestBody @Valid InInactiveSquareListDTO dto) {
+        service.createList(dto);
+
+        return ResponseEntity.ok().build();
+    }
+    
+
+    // DELETE
     @DeleteMapping("{id}")
     public ResponseEntity<?> deleteInactiveSquare(@PathVariable UUID id) {
         service.delete(id);
