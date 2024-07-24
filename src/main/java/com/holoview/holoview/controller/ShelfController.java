@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.holoview.holoview.controller.dto.shelf.InShelfDTO;
+import com.holoview.holoview.controller.dto.shelf.InShelfListDTO;
 import com.holoview.holoview.controller.dto.shelf.OutShelfDTO;
 import com.holoview.holoview.model.entity.Shelf;
 import com.holoview.holoview.service.impl.ShelfService;
@@ -26,6 +27,7 @@ import lombok.AllArgsConstructor;
 public class ShelfController {
     private final ShelfService service;
 
+    // POST
     @PostMapping
     public ResponseEntity<OutShelfDTO> createShelf(@RequestBody @Valid InShelfDTO dto) throws URISyntaxException {
         Shelf newShelf = service.create(dto);
@@ -35,6 +37,14 @@ public class ShelfController {
         return ResponseEntity.created(shelfUri).body(new OutShelfDTO(newShelf));
     }
 
+    @PostMapping("list")
+    public ResponseEntity<?> createShelfList(@RequestBody @Valid InShelfListDTO dto) {
+        service.createShelfList(dto);
+
+        return ResponseEntity.ok().build();
+    }
+
+    // DELETE
     @DeleteMapping("{id}")
     public ResponseEntity<OutShelfDTO> deleteShelf(@PathVariable UUID id) {
         service.delete(id);
