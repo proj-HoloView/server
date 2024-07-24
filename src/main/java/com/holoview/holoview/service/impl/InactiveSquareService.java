@@ -9,7 +9,10 @@ import com.holoview.holoview.controller.dto.inactiveSquare.InInactiveSquareDTO;
 import com.holoview.holoview.model.entity.InactiveSquare;
 import com.holoview.holoview.model.entity.ShopArrangement;
 import com.holoview.holoview.model.repository.InactiveSquareRepository;
+import com.holoview.holoview.service.CustomLabel;
 import com.holoview.holoview.service.IInactiveSquareService;
+import com.holoview.holoview.service.exception.BadRequestException;
+import com.holoview.holoview.service.exception.ConflictException;
 import com.holoview.holoview.service.exception.NotFoundException;
 
 import lombok.AllArgsConstructor;
@@ -23,6 +26,14 @@ public class InactiveSquareService implements IInactiveSquareService {
     @Override
     public InactiveSquare create(InInactiveSquareDTO dto) {
         ShopArrangement shopArrangementFound = shopArrangementService.findById(dto.shopArrangementId());
+
+        if (dto.x() > shopArrangementFound.getSideSize() || dto.y() > shopArrangementFound.getSideSize()) {
+            throw new BadRequestException(CustomLabel.OUT_RANGED_LOCALIZATION);
+        }
+
+        if (repository.findByXAndY(dto.x(), dto.y()).isPresent()) {
+            throw new ConflictException();
+        }
 
         InactiveSquare newInactiveSquare = new InactiveSquare();
 
