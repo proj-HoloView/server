@@ -70,6 +70,16 @@ public class ProductService implements IProductService {
         return repository.save(productFound);
     }
 
+    // PATCH
+    @Override
+    public Product updatePrice(UUID id, Double newPrice) {
+        Product productFound = this.findById(id);
+
+        productFound.setPrice(newPrice);
+
+        return repository.save(productFound);
+    }
+
     // DELETE
     @Override
     public void delete(UUID id) {

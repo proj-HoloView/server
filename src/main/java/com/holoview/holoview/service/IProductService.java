@@ -11,4 +11,6 @@ public interface IProductService extends
                 IReadable<Product, UUID>,
                 IEditable<Product, UUID, InProductDTO> {
         List<Product> findAllByShopId(UUID shopId);
+
+        Product updatePrice(UUID id, Double newPrice);
 }
