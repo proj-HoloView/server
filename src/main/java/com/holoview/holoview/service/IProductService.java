@@ -13,4 +13,6 @@ public interface IProductService extends
         List<Product> findAllByShopId(UUID shopId);
 
         Product updatePrice(UUID id, Double newPrice);
+
+        Product updateAmount(UUID id, Integer newAmount);
 }
