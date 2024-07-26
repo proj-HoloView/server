@@ -10,6 +10,7 @@ import com.holoview.holoview.controller.dto.shop.InShopDTO;
 import com.holoview.holoview.model.entity.Shop;
 import com.holoview.holoview.model.repository.ShopRepository;
 import com.holoview.holoview.service.IShopService;
+import com.holoview.holoview.service.exception.BadRequestException;
 import com.holoview.holoview.service.exception.NotFoundException;
 
 import lombok.AllArgsConstructor;
@@ -21,6 +22,9 @@ public class ShopService implements IShopService {
 
     @Override
     public Shop create(InShopDTO dto) {
+        if (repository.findByName(dto.name()).isPresent())
+            throw new BadRequestException("Nome já utilizado");
+
         Shop newShop = new Shop();
 
         BeanUtils.copyProperties(dto, newShop);
