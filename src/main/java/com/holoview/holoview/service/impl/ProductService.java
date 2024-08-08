@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.holoview.holoview.controller.dto.product.InProductDTO;
 import com.holoview.holoview.model.entity.Product;
@@ -22,6 +23,7 @@ public class ProductService implements IProductService {
     private final ProductRepository repository;
     private final ShopService shopService;
     private final ProductCategoryService categoryService;
+    private final BlobStorageService blobStorageService;
 
     // POST
     @Override
@@ -85,6 +87,17 @@ public class ProductService implements IProductService {
         Product productFound = this.findById(id);
 
         productFound.setAmount(newAmount);
+
+        return repository.save(productFound);
+    }
+
+    @Override
+    public Product updatePicture(UUID id, MultipartFile picture) {
+        Product productFound = this.findById(id);
+
+        String pictureUrl = blobStorageService.uploadBlob(productFound.getShop(), productFound, picture);
+
+        productFound.setPicture(pictureUrl);
 
         return repository.save(productFound);
     }
