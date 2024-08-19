@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.holoview.holoview.controller.dto.admin.InAdminDTO;
+import com.holoview.holoview.controller.dto.admin.LoginAdminDTO;
 import com.holoview.holoview.controller.dto.admin.OutAdminDTO;
 import com.holoview.holoview.controller.dto.admin.OutAdminTokenDTO;
 import com.holoview.holoview.infra.security.TokenService;
@@ -46,8 +47,8 @@ public class AdminController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<OutAdminTokenDTO> login(@RequestBody InAdminDTO dto) {
-        Admin adminFound = service.findByEmail(dto.email());
+    public ResponseEntity<OutAdminTokenDTO> login(@RequestBody @Valid LoginAdminDTO dto) {
+        Admin adminFound = service.findByEmailOrUsername(dto.login());
 
         if (passwordEncoder.matches(dto.password(), adminFound.getPassword())) {
             String token = this.tokenService.generateToken(adminFound);

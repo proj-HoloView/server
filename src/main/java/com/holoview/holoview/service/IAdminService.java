@@ -10,4 +10,5 @@ public interface IAdminService extends
                 IReadable<Admin, UUID>,
                 IWritable<Admin, UUID, InAdminDTO> {
         Admin findByEmail(String email);
+        Admin findByEmailOrUsername(String login);
 }

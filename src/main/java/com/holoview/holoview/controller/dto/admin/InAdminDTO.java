@@ -10,5 +10,5 @@ import jakarta.validation.constraints.Size;
 public record InAdminDTO(
         @NotNull @NotBlank @Size(min = 5) String username,
         @NotNull @NotBlank @Email String email,
-        @NotNull @NotBlank String password, UUID shopId) {
+        @NotNull @NotBlank String password, @NotNull UUID shopId) {
 }

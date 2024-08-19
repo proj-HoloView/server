@@ -58,6 +58,13 @@ public class AdminService implements IAdminService {
     }
 
     @Override
+    public Admin findByEmailOrUsername(String login) {
+        Admin adminFound = repository.findByEmailOrUsername(login).orElseThrow(NotFoundException::new);
+
+        return adminFound;
+    }
+
+    @Override
     public List<Admin> findAll() {
         List<Admin> adminsFound = repository.findAll();
 
