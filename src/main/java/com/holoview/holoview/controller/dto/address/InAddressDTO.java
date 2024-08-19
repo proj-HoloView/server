@@ -12,6 +12,7 @@ public record InAddressDTO(
                 String complement,
                 String district,
                 @NotNull @NotBlank String city,
+                @NotNull @NotBlank String zipCode,
                 UUID shopId) {
 
 }

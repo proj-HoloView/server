@@ -35,6 +35,9 @@ public class Address {
     @Column
     private String city;
 
+    @Column
+    private String zipCode;
+
     @ToString.Exclude
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(referencedColumnName = "id")
