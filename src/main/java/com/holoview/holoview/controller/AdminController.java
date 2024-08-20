@@ -17,11 +17,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.holoview.holoview.controller.dto.admin.InAdminDTO;
+import com.holoview.holoview.controller.dto.admin.InAdminShopDTO;
 import com.holoview.holoview.controller.dto.admin.LoginAdminDTO;
 import com.holoview.holoview.controller.dto.admin.OutAdminDTO;
 import com.holoview.holoview.controller.dto.admin.OutAdminTokenDTO;
+import com.holoview.holoview.controller.dto.admin.OutAdminTokenShopDTO;
+import com.holoview.holoview.controller.dto.shop.OutShopDTO;
 import com.holoview.holoview.infra.security.TokenService;
 import com.holoview.holoview.model.entity.Admin;
+import com.holoview.holoview.service.dto.AdminShopDTO;
 import com.holoview.holoview.service.impl.AdminService;
 
 import jakarta.validation.Valid;
@@ -44,6 +48,17 @@ public class AdminController {
         String token = this.tokenService.generateToken(newAdmin);
 
         return ResponseEntity.created(adminURI).body(new OutAdminTokenDTO(newAdmin, token));
+    }
+
+    @PostMapping("/shop")
+    public ResponseEntity<OutAdminTokenShopDTO> createAdminWithShop(@RequestBody InAdminShopDTO dto) {
+        AdminShopDTO newAdminShop = service.createAdminWithShop(dto);
+
+        String token = this.tokenService.generateToken(newAdminShop.admin());
+
+        return ResponseEntity.ok(new OutAdminTokenShopDTO(
+                new OutAdminTokenDTO(newAdminShop.admin(), token),
+                new OutShopDTO(newAdminShop.shop())));
     }
 
     @PostMapping("/login")

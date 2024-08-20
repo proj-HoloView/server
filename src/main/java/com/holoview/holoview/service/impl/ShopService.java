@@ -40,6 +40,10 @@ public class ShopService implements IShopService {
         return shopFound;
     }
 
+    public Boolean existsByName(String name) {
+        return repository.findByName(name).isPresent();
+    }
+
     @Override
     public List<Shop> findAll() {
         List<Shop> shopsFound = repository.findAll();

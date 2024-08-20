@@ -1,5 +1,6 @@
 package com.holoview.holoview.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -8,10 +9,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.holoview.holoview.controller.dto.admin.InAdminDTO;
+import com.holoview.holoview.controller.dto.admin.InAdminShopDTO;
 import com.holoview.holoview.model.entity.Admin;
 import com.holoview.holoview.model.entity.Shop;
 import com.holoview.holoview.model.repository.AdminRepository;
 import com.holoview.holoview.service.IAdminService;
+import com.holoview.holoview.service.dto.AdminShopDTO;
 import com.holoview.holoview.service.exception.ConflictException;
 import com.holoview.holoview.service.exception.NotFoundException;
 
@@ -40,6 +43,32 @@ public class AdminService implements IAdminService {
         newAdmin.setPassword(passwordEncoder.encode(dto.password()));
 
         return repository.save(newAdmin);
+    }
+
+    @Override
+    public AdminShopDTO createAdminWithShop(InAdminShopDTO dto) {
+        List<String> conflictedFields = new ArrayList<>();
+
+        if (repository.existsByEmail(dto.admin().email())) {
+            conflictedFields.add("Admin.email");
+        }
+
+        if (repository.existsByUsername(dto.admin().username())) {
+            conflictedFields.add("Admin.username");
+        }
+
+        if (shopService.existsByName(dto.shop().name())) {
+            conflictedFields.add("Shop.name");
+        }
+
+        if (!conflictedFields.isEmpty())
+            throw new ConflictException(conflictedFields);
+
+        Shop newShop = shopService.create(dto.shop());
+
+        Admin newAdmin = this.create(dto.admin().newShopId(newShop.getId()));
+
+        return new AdminShopDTO(newAdmin, newShop);
     }
 
     // GET

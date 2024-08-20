@@ -24,8 +24,8 @@ public class CustomExceptionHandler {
     }
 
     @ExceptionHandler(ConflictException.class)
-    public ResponseEntity<?> conclictHandler() {
-        return ResponseEntity.status(409).build();
+    public ResponseEntity<?> conclictHandler(ConflictException e) {
+        return ResponseEntity.status(409).body(new OutError(e.getMessage()));
     }
 
     @ExceptionHandler(BadRequestException.class)
