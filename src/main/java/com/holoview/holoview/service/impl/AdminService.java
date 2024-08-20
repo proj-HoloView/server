@@ -27,7 +27,7 @@ public class AdminService implements IAdminService {
     // POST
     @Override
     public Admin create(InAdminDTO dto) {
-        if (repository.existsByEmail(dto.email())) {
+        if (repository.existsByEmail(dto.email()) || repository.existsByUsername(dto.username())) {
             throw new ConflictException();
         }
 

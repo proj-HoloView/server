@@ -13,6 +13,8 @@ public interface AdminRepository extends JpaRepository<Admin, UUID> {
 
     Boolean existsByEmail(String email);
 
+    Boolean existsByUsername(String username);
+
     @Query("SELECT a FROM Admin a WHERE email = ?1 OR username = ?1")
     Optional<Admin> findByEmailOrUsername(String login);
 }
